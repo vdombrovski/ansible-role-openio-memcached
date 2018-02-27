@@ -1,0 +1,7 @@
+# roles/memcached/handlers/main.yml
+---
+
+- name: restart memcached
+  service:
+    name: "{{ memcached_service }}"
+    state: restarted

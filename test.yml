@@ -5,4 +5,4 @@
   become: true
   roles:
     - role: role_under_test
-      memcached_bind_address: 172.17.0.2
+      memcached_bind_address: "{{ ansible_default_ipv4.address }}"

@@ -4,7 +4,7 @@ memcached_enabled_in_systemd: true
 
 memcached_port: 11211
 memcached_maxconn: 1024
-memcached_cachesize: 64
+memcached_cachesize_MBytes: 64
 memcached_bind_interface: eth0
 memcached_bind_address: "{{ hostvars[inventory_hostname]['ansible_' + memcached_bind_interface]['ipv4']['address'] }}"
 memcached_log_file: /var/log/memcached.log

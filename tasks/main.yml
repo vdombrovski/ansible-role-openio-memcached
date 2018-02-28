@@ -1,22 +1,32 @@
-# roles/memcached/tasks/main.yml
+# roles/ansible-role-memcached/tasks/main.yml
 ---
-
-- include_vars: "{{ item }}"
+- name: "Include {{ ansible_distribution }} variables"
+  include_vars: "{{ item }}"
   with_first_found:
     - "{{ ansible_distribution }}.yml"
     - "{{ ansible_os_family }}.yml"
-  tags: memcached
+  tags: install
 
-- name: Install packages
-  package:
-    name: "{{ item }}"
-    state: installed
-  with_items: "{{ memcached_packages }}"
-  tags: memcached
+- name: "Include {{ ansible_distribution }} tasks"
+  include_tasks: "{{ item }}"
+  with_first_found:
+    - "{{ ansible_distribution }}.yml"
+    - "{{ ansible_os_family }}.yml"
+  tags: install
 
 - name: Ensure service is started
   service:
     name: "{{ memcached_service }}"
     state: started
     enabled: true
-  tags: memcached
+  tags: install
+  when: memcached_enabled_in_systemd
+
+- name: Memcached configuration.
+  template:
+    src: memcached.{{ ansible_os_family }}.conf.j2
+    dest: "{{ memcached_config_file }}"
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart memcached

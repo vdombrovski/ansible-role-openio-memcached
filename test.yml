@@ -4,5 +4,5 @@
 - hosts: all
   become: true
   roles:
-    - role_under_test
+    - role: role_under_test
       memcached_bind_address: 172.17.0.2

@@ -10,5 +10,5 @@ memcached_bind_address: "{{ hostvars[inventory_hostname]['ansible_' + memcached_
 memcached_log_file: /var/log/memcached.log
 memcached_log_verbose: ""
 #memcached_log_verbose: "-v"
-
+memcached_udp_disabled: true
 ...

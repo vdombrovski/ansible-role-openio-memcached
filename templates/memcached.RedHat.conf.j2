@@ -18,4 +18,4 @@ CACHESIZE="{{ memcached_cachesize_MBytes }}"
 # -l Specify which IP address to listen on. The default is to listen on all IP addresses
 #    This parameter is one of the only security measures that memcached has, so make sure
 #    it's listening on a firewalled interface.
-OPTIONS="-l {{ memcached_bind_address }} {{ memcached_log_verbose }} >> {{ memcached_log_file }} 2>&1"
+OPTIONS="-l {{ memcached_bind_address }} {{ memcached_log_verbose }} {{ '-U 0' if memcached_udp_disabled else ''  }} >> {{ memcached_log_file }} 2>&1"

@@ -23,6 +23,8 @@ An Ansible role for PURPOSE. Specifically, the responsibilities of this role are
 | `memcached_bind_address` | `"{{ hostvars[inventory_hostname]['ansible_' + memcached_bind_interface]['ipv4']['address'] }}"` | IP used for address |
 | `memcached_log_file` | `/var/log/memcached.log` | The log file |
 | `memcached_log_verbose` | `"` | The verbosity `-v` or `-vv` improve it |
+| `memcached_udp_disabled` | `true` | Disable UDP to prevent reflection attacks |
+
 
 ## Dependencies
 

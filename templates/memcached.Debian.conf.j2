@@ -41,3 +41,8 @@ logfile {{ memcached_log_file }}
 
 # Maximize core file limit
 # -r
+
+# modifies the UDP port, defaulting to on. UDP is useful for fetching or setting
+# small items, not as useful for manipulating large items. Setting this to 0 will
+# disable it, if you're worried.
+{{ '-U 0' if memcached_udp_disabled else '# -U ' ~ memcached_port  }}

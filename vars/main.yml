@@ -1,0 +1,4 @@
+---
+openio_memcached_sysconfig_dir: /etc/oio/sds                                    
+openio_memcached_definition_file: "{{ openio_memcached_sysconfig_dir }}/{{ openio_memcached_namespace }}/memcached-{{ openio_memcached_serviceid }}/memcached-{{ openio_memcached_serviceid }}.conf"
+...

@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/cdelgehier/ansible-role-memcached.svg?branch=master)](https://travis-ci.org/cdelgehier/ansible-role-memcached)
+[![Build Status](https://travis-ci.org/open-io/ansible-role-openio-memcached.svg?branch=master)](https://travis-ci.org/open-io/ansible-role-openio-memcached)
 # Ansible role `memcached`
 
 An Ansible role for PURPOSE. Specifically, the responsibilities of this role are to:

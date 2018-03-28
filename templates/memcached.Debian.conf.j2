@@ -10,28 +10,28 @@
 -d
 
 # Log memcached's output to /var/log/memcached
-logfile {{ memcached_log_file }}
-{{ memcached_log_verbose }}
+logfile {{ openio_memcached_log_file }}
+{{ openio_memcached_log_verbose }}
 
 # Start with a cap of 64 megs of memory. It's reasonable, and the daemon default
 # Note that the daemon will grow to this size, but does not start out holding this much
 # memory
--m {{ memcached_cachesize_MBytes }}
+-m {{ openio_memcached_cachesize_MBytes }}
 
 # Default connection port is 11211
--p {{ memcached_port }}
+-p {{ openio_memcached_port }}
 
 # Run the daemon as root. The start-memcached will default to running as root if no
 # -u command is present in this config file
--u {{ memcached_user }}
+-u {{ openio_memcached_user }}
 
 # Specify which IP address to listen on. The default is to listen on all IP addresses
 # This parameter is one of the only security measures that memcached has, so make sure
 # it's listening on a firewalled interface.
--l {{ memcached_bind_address }}
+-l {{ openio_memcached_bind_address }}
 
 # Limit the number of simultaneous incoming connections. The daemon default is 1024
--c {{ memcached_maxconn }}
+-c {{ openio_memcached_maxconn }}
 
 # Lock down all paged memory. Consult with the README and homepage before you do this
 # -k
@@ -45,4 +45,4 @@ logfile {{ memcached_log_file }}
 # modifies the UDP port, defaulting to on. UDP is useful for fetching or setting
 # small items, not as useful for manipulating large items. Setting this to 0 will
 # disable it, if you're worried.
-{{ '-U 0' if memcached_udp_disabled else '# -U ' ~ memcached_port  }}
+{{ '-U 0' if openio_memcached_udp_disabled else '# -U ' ~ openio_memcached_port  }}

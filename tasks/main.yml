@@ -13,20 +13,10 @@
     - "{{ ansible_distribution }}.yml"
     - "{{ ansible_os_family }}.yml"
   tags: install
+  register: _memcached_pkg
 
-- name: Ensure service is started
-  service:
-    name: "{{ memcached_service }}"
-    state: started
-    enabled: true
-  tags: install
-  when: memcached_enabled_in_systemd
-
-- name: Memcached configuration.
-  template:
-    src: memcached.{{ ansible_os_family }}.conf.j2
-    dest: "{{ memcached_config_file }}"
-    owner: root
-    group: root
-    mode: 0644
-  notify: restart memcached
+- name: restart memcached
+  command: >-
+    "gridinit_cmd restart 
+    {{openio_memcached_namespace}}-memcached-{{openio_memcached_serviceid}}"
+  when: _memcached_pkg.changed

@@ -2,11 +2,8 @@
 #
 # Distribution-specific variables for Debian, Ubuntu, ...
 ---
-memcached_user: memcache
+openio_memcached_user: memcache
 
-memcached_packages:
+openio_memcached_packages:
   - memcached
-
-memcached_service: memcached
-
-memcached_config_file: /etc/memcached.conf
+...

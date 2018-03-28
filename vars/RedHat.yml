@@ -2,11 +2,8 @@
 #
 # Distribution-specific variables for RHEL, CentOS, ...
 ---
-memcached_user: memcached
+openio_memcached_user: memcached
 
-memcached_packages:
+openio_memcached_packages:
   - memcached
-
-memcached_service: memcached
-
-memcached_config_file: /etc/sysconfig/memcached
+...

@@ -1,21 +1,21 @@
 
 # {{ ansible_managed }}
 # Default connection port is 11211
-PORT="{{ memcached_port }}"
+PORT="{{ openio_memcached_port }}"
 
 # The user to run memcached as.
-USER="{{ memcached_user }}"
+USER="{{ openio_memcached_user }}"
 
 # Limit the number of simultaneous incoming connections. The daemon default is 1024.
-MAXCONN="{{ memcached_maxconn }}"
+MAXCONN="{{ openio_memcached_maxconn }}"
 
 # Start with a cap of 64 megs of memory. It's reasonable, and the daemon default
 # Note that the daemon will grow to this size, but does not start out holding this much
 # memory
-CACHESIZE="{{ memcached_cachesize_MBytes }}"
+CACHESIZE="{{ openio_memcached_cachesize_MBytes }}"
 
 # Extra options:
 # -l Specify which IP address to listen on. The default is to listen on all IP addresses
 #    This parameter is one of the only security measures that memcached has, so make sure
 #    it's listening on a firewalled interface.
-OPTIONS="-l {{ memcached_bind_address }} {{ memcached_log_verbose }} {{ '-U 0' if memcached_udp_disabled else ''  }} >> {{ memcached_log_file }} 2>&1"
+OPTIONS="-l {{ openio_memcached_bind_address }} {{ openio_memcached_log_verbose }} {{ '-U 0' if openio_memcached_udp_disabled else ''  }} >> {{ openio_memcached_log_file }} 2>&1"

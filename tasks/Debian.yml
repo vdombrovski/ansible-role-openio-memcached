@@ -3,6 +3,5 @@
   package:
     name: "{{ item }}"
     state: installed
-  with_items: "{{ memcached_packages }}"
-
+  with_items: "{{ openio_memcached_packages }}"
 ...

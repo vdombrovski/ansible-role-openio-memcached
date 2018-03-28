@@ -15,30 +15,47 @@ An Ansible role for PURPOSE. Specifically, the responsibilities of this role are
 
 | Variable   | Default | Comments (type)  |
 | :---       | :---    | :---             |
-| `memcached_enabled_in_systemd` | `true` | Set `enabled` in systemd |
-| `memcached_port` | `11211` | listening port |
-| `memcached_maxconn` | `1024` | By default the max number of concurrent connections is set to 1024. Configuring this correctly is important. Extra connections to memcached may hang while waiting for slots to free up. You may detect if your instance has been running out of connections by issuing a `stats` command and looking at `listen_disabled_num`. That value should be zero or close to zero. |
-| `memcached_cachesize_MBytes` | `64` | Start with a cap of 64 megs of memory |
-| `memcached_bind_interface` | `eth0` | Interface used  |
-| `memcached_bind_address` | `"{{ hostvars[inventory_hostname]['ansible_' + memcached_bind_interface]['ipv4']['address'] }}"` | IP used for address |
-| `memcached_log_file` | `/var/log/memcached.log` | The log file |
-| `memcached_log_verbose` | `"` | The verbosity `-v` or `-vv` improve it |
-| `memcached_udp_disabled` | `true` | Disable UDP to prevent reflection attacks |
-
+| `openio_memcached_namespace` | `"OPENIO" ` | Namespace OpenIO SDS |
+| `openio_memcached_serviceid` | `"0"` | Service ID | 
 
 ## Dependencies
 
-None
+```yaml
+---
+- src: https://github.com/racciari/ansible-role-repo-openio-sds
+  version: master
+  name: repository
+
+- src: https://github.com/open-io/ansible-role-openio-gridinit.git
+  version: master
+  name: gridinit
+...
+```
 
 ## Example Playbook
 
 ```yaml
-- hosts: memcached
-  gather_facts: true
+- hosts: all
   become: true
   roles:
-    - role: ansible-role-memcached
-      memcached_bind_address: 192.168.1.173
+    - role: repository
+    - role: gridinit
+      openio_gridinit_services:
+        - name: memcached-0
+          namespace: "OIO"
+          type: memcached
+          configuration:
+            command: >-
+              /usr/bin/memcached -m 64 -p 12346
+              -u openio -l {{ ansible_default_ipv4.address }} -c 1024 -U 0
+            enabled: true
+            start_at_boot: true
+            on_die: respawn
+            uid: openio
+            gid: openio
+            env_PATH: /usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin
+    - role: role_under_test
+      openio_memcached_namespace: "OIO"
 ```
 
 

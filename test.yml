@@ -4,5 +4,22 @@
 - hosts: all
   become: true
   roles:
+    - role: repository
+    - role: gridinit
+      openio_gridinit_services:
+        - name: memcached-0
+          namespace: "TRAVIS"
+          type: memcached
+          configuration:
+            command: >-
+              /usr/bin/memcached -m 64 -p 12346
+              -u openio -l {{ ansible_default_ipv4.address }} -c 1024 -U 0
+            enabled: true
+            start_at_boot: true
+            on_die: respawn
+            uid: openio
+            gid: openio
+            env_PATH: /usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin
     - role: role_under_test
-      memcached_bind_address: "{{ ansible_default_ipv4.address }}"
+      openio_memcached_namespace: "TRAVIS"
+...

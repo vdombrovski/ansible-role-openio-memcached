@@ -2,4 +2,6 @@
 ---
 openio_memcached_namespace: "OPENIO"                                           
 openio_memcached_serviceid: "0"
+openio_memcached_bind_address: 127.0.0.1
+openio_memcached_bind_port: 6019
 ...

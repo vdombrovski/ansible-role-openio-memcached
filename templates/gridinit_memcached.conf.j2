@@ -1,0 +1,10 @@
+# {{ ansible_managed }}
+[Service.{{ openio_memcached_namespace }}-memcached-{{ openio_memcached_serviceid }}]
+command=/usr/bin/memcached -m 64 -p {{ openio_memcached_bind_port }} -u openio -l {{ openio_memcached_bind_address }} -c 1024 -U 0
+enabled=true
+start_at_boot=true
+on_die=respawn
+group={{ openio_memcached_namespace }},memcached,{{ openio_memcached_serviceid }}
+uid=openio
+gid=openio
+env.PATH=/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin

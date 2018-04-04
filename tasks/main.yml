@@ -15,8 +15,24 @@
   tags: install
   register: _memcached_pkg
 
+- name: Ensures conf directory exists
+  file:
+    dest: "/etc/gridinit.d/{{ openio_memcached_namespace }}"
+    state: directory
+  tags: install
+
+- name: Generate configuration files
+  template:
+    src: gridinit_memcached.conf.j2
+    dest: "/etc/gridinit.d/{{ openio_memcached_namespace }}/memcached-{{ openio_memcached_serviceid }}.conf"
+    owner: openio
+    group: openio
+    mode: 0644
+  tags: install
+  register: _memcached_conf
+
 - name: restart memcached
-  command: >-
-    "gridinit_cmd restart 
-    {{openio_memcached_namespace}}-memcached-{{openio_memcached_serviceid}}"
-  when: _memcached_pkg.changed
+  shell: "gridinit_cmd reload; gridinit_cmd restart  {{openio_memcached_namespace}}-memcached-{{openio_memcached_serviceid}}"
+  when: _memcached_conf.changed
+  tags: configure
+...

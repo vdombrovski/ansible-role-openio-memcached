@@ -15,10 +15,14 @@ An Ansible role for PURPOSE. Specifically, the responsibilities of this role are
 
 | Variable   | Default | Comments (type)  |
 | :---       | :---    | :---             |
+| `openio_memcached_bind_address` | `127.0.0.1` | Listening IP address |
+| `openio_memcached_bind_port` | `6019` | Listening PORT |
 | `openio_memcached_namespace` | `"OPENIO" ` | Namespace OpenIO SDS |
 | `openio_memcached_serviceid` | `"0"` | Service ID | 
 
 ## Dependencies
+
+- You have to use this role after the role `ansible-role-openio-repository` and the role `ansible-role-openio-gridinit`
 
 ```yaml
 ---
@@ -40,22 +44,11 @@ An Ansible role for PURPOSE. Specifically, the responsibilities of this role are
   roles:
     - role: repository
     - role: gridinit
-      openio_gridinit_services:
-        - name: memcached-0
-          namespace: "OIO"
-          type: memcached
-          configuration:
-            command: >-
-              /usr/bin/memcached -m 64 -p 12346
-              -u openio -l {{ ansible_default_ipv4.address }} -c 1024 -U 0
-            enabled: true
-            start_at_boot: true
-            on_die: respawn
-            uid: openio
-            gid: openio
-            env_PATH: /usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin
     - role: role_under_test
       openio_memcached_namespace: "OIO"
+      openio_memcached_bind_address: "{{ ansible_default_ipv4.address }}"
+      openio_memcached_bind_port: "12346"
+
 ```
 
 

@@ -24,7 +24,7 @@
 - name: Generate configuration files
   template:
     src: gridinit_memcached.conf.j2
-    dest: "/etc/gridinit.d/{{ openio_memcached_namespace }}/memcached-{{ openio_memcached_serviceid }}.conf"
+    dest: "{{ openio_memcached_gridinit_dir }}/memcached-{{ openio_memcached_serviceid }}.conf"
     owner: openio
     group: openio
     mode: 0644
@@ -32,7 +32,9 @@
   register: _memcached_conf
 
 - name: restart memcached
-  shell: "gridinit_cmd reload; gridinit_cmd restart  {{openio_memcached_namespace}}-memcached-{{openio_memcached_serviceid}}"
+  shell: |
+    gridinit_cmd reload
+    gridinit_cmd restart  {{openio_memcached_namespace}}-memcached-{{openio_memcached_serviceid}}
   when: _memcached_conf.changed
   tags: configure
 ...

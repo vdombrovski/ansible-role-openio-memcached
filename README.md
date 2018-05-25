@@ -15,7 +15,8 @@ An Ansible role for PURPOSE. Specifically, the responsibilities of this role are
 
 | Variable   | Default | Comments (type)  |
 | :---       | :---    | :---             |
-| `openio_memcached_bind_address` | `127.0.0.1` | Listening IP address |
+| `openio_memcached_bind_interface` | `{{ ansible_default_ipv4.alias }}` | Listening interface |
+| `openio_memcached_bind_address` | `{{ hostvars[inventory_hostname]['ansible_' + openio_memcached_bind_interface]['ipv4']['address'] }}` | Listening IP address |
 | `openio_memcached_bind_port` | `6019` | Listening PORT |
 | `openio_memcached_namespace` | `"OPENIO" ` | Namespace OpenIO SDS |
 | `openio_memcached_serviceid` | `"0"` | Service ID | 

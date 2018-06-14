@@ -6,6 +6,8 @@
   roles:
     - role: repository
     - role: gridinit
+      openio_gridinit_per_ns: true
+      openio_gridinit_namespace: "TRAVIS"
     - role: role_under_test
       openio_memcached_namespace: "TRAVIS"
       openio_memcached_bind_address: "{{ ansible_default_ipv4.address }}"

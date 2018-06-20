@@ -2,8 +2,8 @@
 [Service.{{ openio_memcached_namespace }}-memcached-{{ openio_memcached_serviceid }}]
 command=/usr/bin/memcached -m 64 -p {{ openio_memcached_bind_port }} -u openio -l {{ openio_memcached_bind_address }} -c 1024 -U 0
 enabled=true
-start_at_boot=true
-on_die=respawn
+start_at_boot={{ openio_memcached_gridinit_start_at_boot }}
+on_die={{ openio_memcached_gridinit_on_die }}
 group={{ openio_memcached_namespace }},memcached,{{ openio_memcached_serviceid }}
 uid=openio
 gid=openio

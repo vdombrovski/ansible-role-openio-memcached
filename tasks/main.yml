@@ -23,7 +23,8 @@
 - name: Generate configuration files
   template:
     src: gridinit_memcached.conf.j2
-    dest: "{{ openio_memcached_gridinit_dir }}/memcached-{{ openio_memcached_serviceid }}.conf"
+    dest: "{{ openio_memcached_gridinit_dir }}/\
+      {{ openio_memcached_gridinit_file_prefix }}memcached-{{ openio_memcached_serviceid }}.conf"
     owner: openio
     group: openio
     mode: 0644

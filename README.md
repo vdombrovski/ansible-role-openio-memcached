@@ -23,7 +23,8 @@ An Ansible role for PURPOSE. Specifically, the responsibilities of this role are
 | `openio_memcached_gridinit_on_die` | `respawn` | Behaviour on failure |
 | `openio_memcached_gridinit_start_at_boot` | `true` | Start at system boot |
 | `openio_memcached_namespace` | `"OPENIO" ` | Namespace OpenIO SDS |
-| `openio_memcached_serviceid` | `"0"` | Service ID | 
+| `openio_memcached_serviceid` | `"0"` | Service ID |
+| `openio_memcached_provision_only` | `false` | Provision only without restarting |
 
 ## Dependencies
 

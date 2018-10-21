@@ -6,4 +6,6 @@ openio_memcached_user: memcached
 
 openio_memcached_packages:
   - memcached
+
+syslog_user: openio
 ...

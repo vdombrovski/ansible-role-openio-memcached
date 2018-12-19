@@ -14,27 +14,25 @@
     - "{{ ansible_os_family }}.yml"
   tags: install
 
-- name: Ensures conf directory exists
+- name: Ensure directories exists
   file:
-    dest: "/etc/gridinit.d/{{ openio_memcached_namespace }}"
+    path: "{{ item.path }}"
     state: directory
-  tags: install
-
-- name: Ensure log directory
-  file:
-    path: "/var/log/oio/sds/{{ openio_memcached_namespace }}/memcached-{{ openio_memcached_serviceid }}"
-    state: directory
-    owner: "{{ syslog_user }}"
-    group: openio
-    mode: 0750
-    recurse: true
+    owner: "{{ item.owner | default('openio') }}"
+    group: "{{ item.group | default('openio') }}"
+    mode: "{{ item.mode | default(0755) }}"
+  with_items:
+    - path: "/etc/gridinit.d/{{ openio_memcached_namespace }}"
+    - path: "/var/log/oio/sds/{{ openio_memcached_namespace }}/{{ openio_memcached_servicename }}"
+      owner: "{{ syslog_user }}"
+      mode: "0750"
   tags: install
 
 - name: Generate configuration files
   template:
     src: gridinit_memcached.conf.j2
     dest: "{{ openio_memcached_gridinit_dir }}/\
-      {{ openio_memcached_gridinit_file_prefix }}memcached-{{ openio_memcached_serviceid }}.conf"
+      {{ openio_memcached_gridinit_file_prefix }}{{ openio_memcached_servicename }}.conf"
     owner: openio
     group: openio
     mode: 0644
@@ -44,7 +42,7 @@
 - name: restart memcached
   shell: |
     gridinit_cmd reload
-    gridinit_cmd restart  {{openio_memcached_namespace}}-memcached-{{openio_memcached_serviceid}}
+    gridinit_cmd restart  {{ openio_memcached_namespace }}-{{ openio_memcached_servicename }}
   when: _memcached_conf.changed
   tags: configure
 ...

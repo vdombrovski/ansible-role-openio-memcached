@@ -1,6 +1,6 @@
 # {{ ansible_managed }}
-[Service.{{ openio_memcached_namespace }}-memcached-{{ openio_memcached_serviceid }}]
-command=/usr/bin/memcached -m 64 -p {{ openio_memcached_bind_port }} -u openio -l {{ openio_memcached_bind_address }} -c 1024 -U 0
+[Service.{{ openio_memcached_namespace }}-{{ openio_memcached_servicename }}]
+command=/usr/bin/memcached -m {{ openio_memcached_cachesize_MBytes }} -p {{ openio_memcached_bind_port }} -u openio -l {{ openio_memcached_bind_address }} -c {{ openio_memcached_maxconn }} -U 0
 enabled=true
 start_at_boot={{ openio_memcached_gridinit_start_at_boot }}
 on_die={{ openio_memcached_gridinit_on_die }}

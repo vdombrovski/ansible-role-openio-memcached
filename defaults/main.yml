@@ -6,7 +6,8 @@ openio_memcached_bind_interface: "{{ ansible_default_ipv4.alias }}"
 openio_memcached_bind_address:
   "{{ hostvars[inventory_hostname]['ansible_' + openio_memcached_bind_interface]['ipv4']['address'] }}"
 openio_memcached_bind_port: 6019
-
+openio_memcached_maxconn: 1024
+openio_memcached_cachesize_MBytes: 64
 openio_memcached_gridinit_dir: "/etc/gridinit.d/{{ openio_memcached_namespace }}"
 openio_memcached_gridinit_file_prefix: ""
 openio_memcached_gridinit_on_die: respawn

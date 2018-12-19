@@ -1,7 +1,7 @@
 [![Build Status](https://travis-ci.org/open-io/ansible-role-openio-memcached.svg?branch=master)](https://travis-ci.org/open-io/ansible-role-openio-memcached)
 # Ansible role `memcached`
 
-An Ansible role for PURPOSE. Specifically, the responsibilities of this role are to:
+An Ansible role for manage memcached. Specifically, the responsibilities of this role are to:
 
 - install a memcached
 - configure a memcached
@@ -18,12 +18,14 @@ An Ansible role for PURPOSE. Specifically, the responsibilities of this role are
 | `openio_memcached_bind_interface` | `{{ ansible_default_ipv4.alias }}` | Listening interface |
 | `openio_memcached_bind_address` | `{{ hostvars[inventory_hostname]['ansible_' + openio_memcached_bind_interface]['ipv4']['address'] }}` | Listening IP address |
 | `openio_memcached_bind_port` | `6019` | Listening PORT |
+| `openio_memcached_cachesize_MBytes` | `64` | Cap of 64 megs of memory |
 | `openio_memcached_gridinit_dir` | `/etc/gridinit.d/{{ openio_memcached_namespace }}` | Path to copy the gridinit conf |
 | `openio_memcached_gridinit_file_prefix` | `""` | Maybe set it to {{ openio_memcached_namespace }}- for old gridinit's style |
 | `openio_memcached_gridinit_on_die` | `respawn` | Behaviour on failure |
 | `openio_memcached_gridinit_start_at_boot` | `true` | Start at system boot |
+| `openio_memcached_maxconn` | 1024 |  Limit the number of simultaneous incoming connections |
 | `openio_memcached_namespace` | `"OPENIO" ` | Namespace OpenIO SDS |
-| `openio_memcached_serviceid` | `"0"` | Service ID | 
+| `openio_memcached_serviceid` | `"0"` | Service ID |
 
 ## Dependencies
 
@@ -31,7 +33,11 @@ An Ansible role for PURPOSE. Specifically, the responsibilities of this role are
 
 ```yaml
 ---
-- src: https://github.com/racciari/ansible-role-repo-openio-sds
+- src: https://github.com/open-io/ansible-role-repo-openio-users
+  version: master
+  name: users
+
+- src: https://github.com/open-io/ansible-role-repo-openio-sds
   version: master
   name: repository
 
@@ -47,6 +53,7 @@ An Ansible role for PURPOSE. Specifically, the responsibilities of this role are
 - hosts: all
   become: true
   roles:
+    - role: users
     - role: repository
     - role: gridinit
     - role: role_under_test

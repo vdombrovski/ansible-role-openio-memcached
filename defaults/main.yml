@@ -12,5 +12,6 @@ openio_memcached_gridinit_dir: "/etc/gridinit.d/{{ openio_memcached_namespace }}
 openio_memcached_gridinit_file_prefix: ""
 openio_memcached_gridinit_on_die: respawn
 openio_memcached_gridinit_start_at_boot: true
+openio_memcached_provision_only: false
 
 ...

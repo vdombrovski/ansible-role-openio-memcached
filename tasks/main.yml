@@ -43,6 +43,8 @@
   shell: |
     gridinit_cmd reload
     gridinit_cmd restart  {{ openio_memcached_namespace }}-{{ openio_memcached_servicename }}
-  when: _memcached_conf.changed
+  when:
+    - _memcached_conf.changed
+    - not openio_memcached_provision_only
   tags: configure
 ...

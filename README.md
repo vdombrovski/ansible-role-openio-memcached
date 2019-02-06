@@ -26,6 +26,7 @@ An Ansible role for manage memcached. Specifically, the responsibilities of this
 | `openio_memcached_maxconn` | 1024 |  Limit the number of simultaneous incoming connections |
 | `openio_memcached_namespace` | `"OPENIO" ` | Namespace OpenIO SDS |
 | `openio_memcached_serviceid` | `"0"` | Service ID |
+| `openio_memcached_provision_only` | `False` | Provision only without restarting / bootstrapping |
 
 ## Dependencies
 

@@ -16,7 +16,7 @@ An Ansible role for manage memcached. Specifically, the responsibilities of this
 | Variable   | Default | Comments (type)  |
 | :---       | :---    | :---             |
 | `openio_memcached_bind_interface` | `{{ ansible_default_ipv4.alias }}` | Listening interface |
-| `openio_memcached_bind_address` | `{{ hostvars[inventory_hostname]['ansible_' + openio_memcached_bind_interface]['ipv4']['address'] }}` | Listening IP address |
+| `openio_memcached_bind_address` | `{{ openio_bind_address }}` | Listening IP address |
 | `openio_memcached_bind_port` | `6019` | Listening PORT |
 | `openio_memcached_cachesize_MBytes` | `64` | Cap of 64 megs of memory |
 | `openio_memcached_gridinit_dir` | `/etc/gridinit.d/{{ openio_memcached_namespace }}` | Path to copy the gridinit conf |
@@ -25,7 +25,7 @@ An Ansible role for manage memcached. Specifically, the responsibilities of this
 | `openio_memcached_gridinit_start_at_boot` | `true` | Start at system boot |
 | `openio_memcached_maxconn` | 1024 |  Limit the number of simultaneous incoming connections |
 | `openio_memcached_namespace` | `"OPENIO" ` | Namespace OpenIO SDS |
-| `openio_memcached_serviceid` | `"0"` | Service ID |
+| `openio_memcached_serviceid` | `{{ 0 + openio_legacy_serviceid | d(0) | int }}` | Service ID |
 | `openio_memcached_provision_only` | `False` | Provision only without restarting / bootstrapping |
 
 ## Dependencies

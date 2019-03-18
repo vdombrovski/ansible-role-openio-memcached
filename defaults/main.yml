@@ -1,10 +1,11 @@
 # roles/memcached/defaults/main.yml
 ---
-openio_memcached_namespace: "OPENIO"
-openio_memcached_serviceid: "0"
+openio_memcached_namespace: "{{ namespace | default('OPENIO') }}"
+openio_memcached_serviceid: "{{ 0 + openio_legacy_serviceid | d(0) | int }}"
 openio_memcached_bind_interface: "{{ ansible_default_ipv4.alias }}"
 openio_memcached_bind_address:
-  "{{ hostvars[inventory_hostname]['ansible_' + openio_memcached_bind_interface]['ipv4']['address'] }}"
+  "{{ openio_bind_address \
+  | default(hostvars[inventory_hostname]['ansible_' + openio_memcached_bind_interface]['ipv4']['address']) }}"
 openio_memcached_bind_port: 6019
 openio_memcached_maxconn: 1024
 openio_memcached_cachesize_MBytes: 64

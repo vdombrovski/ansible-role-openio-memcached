@@ -39,12 +39,36 @@
   tags: install
   register: _memcached_conf
 
-- name: restart memcached
+- name: "restart memcached to apply the new configuration"
   shell: |
     gridinit_cmd reload
     gridinit_cmd restart  {{ openio_memcached_namespace }}-{{ openio_memcached_servicename }}
+  register: _restart_memcached
   when:
-    - _memcached_conf.changed
+    - _memcached_conf is changed
     - not openio_memcached_provision_only
   tags: configure
+
+- block:
+    - name: "Ensure memcached is started"
+      command: gridinit_cmd start {{ openio_memcached_namespace }}-{{ openio_memcached_servicename }}
+      register: _start_memcached
+      changed_when: '"Success" in _start_memcached.stdout'
+      when:
+        - not openio_memcached_provision_only
+        - _restart_memcached is skipped
+      tags: configure
+
+    - name: check memcached
+      wait_for:
+        host: "{{ openio_memcached_bind_address }}"
+        port: "{{ openio_memcached_bind_port }}"
+      register: _memcached_check
+      retries: 3
+      delay: 5
+      until: _memcached_check is success
+      changed_when: false
+      when:
+        - not openio_memcached_provision_only
+  when: openio_bootstrap | d(false)
 ...

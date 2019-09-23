@@ -14,5 +14,5 @@ openio_memcached_gridinit_file_prefix: ""
 openio_memcached_gridinit_on_die: respawn
 openio_memcached_gridinit_start_at_boot: true
 openio_memcached_provision_only: false
-
+openio_memcached_package_upgrade: "{{ openio_package_upgrade | d(false) }}"
 ...

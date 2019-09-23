@@ -27,6 +27,7 @@ An Ansible role for manage memcached. Specifically, the responsibilities of this
 | `openio_memcached_namespace` | `"OPENIO" ` | Namespace OpenIO SDS |
 | `openio_memcached_serviceid` | `{{ 0 + openio_legacy_serviceid | d(0) | int }}` | Service ID |
 | `openio_memcached_provision_only` | `False` | Provision only without restarting / bootstrapping |
+| `openio_memcached_package_upgrade` | `false` | Set the packages to the latest version (to be set in extra_vars) |
 
 ## Dependencies
 
